@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class PuckPickupTrigger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Player skater;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider collider)
     {
-        
+        if (collider.CompareTag("Puck") && collider.TryGetComponent(out Puck puck))
+        {
+            skater.TryPickupPuck(puck);
+        }
     }
 }

@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class GoalTrigger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    /// <summary>
+    /// When the player scores a goal, the puck gets placed here.
+    /// </summary>
+    public Transform resetLocation;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Puck"))
+        {
+            // GOAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLAAAAAAASSSSSSSSSSSSSSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+            Rigidbody body = other.GetComponent<Rigidbody>();
+            if (body != null)
+            {
+                body.transform.SetPositionAndRotation(resetLocation.position, resetLocation.rotation);
+                body.linearVelocity = Vector3.zero;
+                body.angularVelocity = Vector3.zero;
+            }
+        }
     }
 }
