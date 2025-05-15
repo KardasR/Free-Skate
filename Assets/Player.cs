@@ -96,29 +96,35 @@ public class Player : MonoBehaviour
         Vector3 moveInput = new Vector3(_inputH, 0, _inputV).normalized;
 
         // only apply friction when velocity is non-zero
-        // if (_body.linearVelocity.sqrMagnitude > 0.01f)
-        // {
-        //     Vector3 friction = -_body.linearVelocity.normalized * IceFriction;
-        //     _body.AddForce(friction, ForceMode.Acceleration);
-        // }
+        if (_body.linearVelocity.sqrMagnitude > 0.01f)
+        {
+            Vector3 friction = -_body.linearVelocity.normalized * IceFriction;
+            _body.AddForce(friction, ForceMode.Acceleration);
+        }
 
         Vector3 moveDir = transform.TransformDirection(moveInput);
-        //Vector3 forward = transform.forward;
+        Vector3 forward = transform.forward;
 
-        // Angle between input direction and object forward
-        //float alignment = Vector3.Dot(moveDir.normalized, forward);
+        //Angle between input direction and object forward
+        float alignment = Vector3.Dot(moveDir.normalized, forward);
 
-        // Allow full force if mostly forward, reduce otherwise
-        //float directionPenalty = Mathf.Clamp01((alignment + 1f) / 2f);
+        //Allow full force if mostly forward, reduce otherwise
+        float directionPenalty = Mathf.Clamp01((alignment + 1f) / 2f);
 
-        // Optionally exaggerate penalty for sharp sideways / backwards input
-        //directionPenalty = Mathf.Pow(directionPenalty, 2f);
+        //Optionally exaggerate penalty for sharp sideways / backwards input
+        directionPenalty = Mathf.Pow(directionPenalty, 2f);
 
-        float speed = SkatingSpeed * (_inputSprinting ? SprintModifier : 1f);// * directionPenalty;
+        float speed = SkatingSpeed * (_inputSprinting ? SprintModifier : 1f) * directionPenalty;// * directionPenalty;
         
         float currentSpeedInMoveDir = Vector3.Dot(_body.linearVelocity, moveDir.normalized);
         if (currentSpeedInMoveDir < MaxSpeed)
             _body.AddForce(moveDir * speed, ForceMode.Acceleration);
+    }
+
+    private void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     /// <summary>
@@ -144,7 +150,7 @@ public class Player : MonoBehaviour
     /// <param name="puck"></param>
     public void TryPickupPuck(Puck puck)
     {
-        if (_heldPuck != null && puck.Pickupable)
+        if (_heldPuck == null && puck.Pickupable)
         {
             _heldPuck = puck;
             puck.Hold();
@@ -160,9 +166,6 @@ public class Player : MonoBehaviour
     /// </summary>
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         _body = GetComponent<Rigidbody>();
     }
 
@@ -184,6 +187,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
             Quit();
+
+        if (Input.GetKeyDown(KeyCode.F))
+            HideCursor();
     }
 
     /// <summary>
