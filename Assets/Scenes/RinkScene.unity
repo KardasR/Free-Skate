@@ -1113,7 +1113,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 16
+  m_Constraints: 20
   m_CollisionDetection: 1
 --- !u!114 &1516782007
 MonoBehaviour:
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa108d0a03bfc2f459f677b876d6379e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickupCooldownDuration: 2
+  PickupCooldownDuration: 3
 --- !u!4 &1516782008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3162193567215084589, guid: 07f0c72b011bac5429ec6ca77a8248bc, type: 3}
@@ -1436,9 +1436,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IceFriction: 1
   SkatingSpeed: 20
-  PassingSpeed: 100
+  PassingSpeed: 25
   SprintModifier: 2
-  MaxSpeed: 1000
+  MaxSpeed: 200
   PuckHoldPoint: {fileID: 1708688711}
 --- !u!1 &1962225592
 GameObject:

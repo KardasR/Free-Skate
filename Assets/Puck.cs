@@ -64,6 +64,8 @@ public class Puck : MonoBehaviour
     /// </summary>
     public void Release(Vector3 force)
     {
+        _pickupCooldownTimeLeft = PickupCooldownDuration;
+
         IsHeld = false;
         _body.isKinematic = false;
         _body.AddForce(force, ForceMode.Impulse);
