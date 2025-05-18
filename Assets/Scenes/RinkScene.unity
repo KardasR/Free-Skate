@@ -2043,8 +2043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IceFriction: 1
-  SkatingSpeed: 10
-  PassingSpeed: 15
+  SkatingSpeed: 15
+  PassingSpeed: 25
   SprintModifier: 2
   MaxSpeed: 100
   PuckHoldPoint: {fileID: 1708688711}
